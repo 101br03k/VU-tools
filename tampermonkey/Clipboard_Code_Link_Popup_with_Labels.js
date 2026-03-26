@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Clipboard Code Link Popup with Labels
 // @namespace    http://tampermonkey.net/
-// @version      1.8
+// @version      1.9
 // @description  Shows a foldout with dynamic links based on clipboard content (VUnetID, email, knowledge item, asset tag or asset location). Opens links in new tabs, with labels and format validation alerts.
 // @author       You
 // @match        https://vu.service-now.com/*
@@ -18,8 +18,9 @@
         const vunetPattern = /^[A-Za-z]{3}\d{3}$/;
         const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         const kbPattern = /^KB\d{7}$/i;
-        const locatiePattern = /([a-zA-Z0-9]{2}-[a-zA-Z0-9]{0,5}[^0-9])/;
+        const locatiePattern = /((HG|TR|IN|OW|NU|02|EC|AC|VO|BV|MF|SH)-[a-zA-Z0-9]{0,5}[^0-9])/;
         const assetPattern = /([a-zA-Z]{2}-[0-9]{6})/;
+        const cinamePattern = /(VU-MWP-[0-9a-zA-Z]{7}|MGM-[0-9a-zA-Z]{6})/;
         const stdnumPattern = /[0-9]{7}/;
 
         const vunetLinks = [
@@ -44,6 +45,10 @@
 
         const ciassetLinks = [
             { label: 'Asset tag', url: 'https://vu.service-now.com/now/nav/ui/classic/params/target/cmdb_ci_list.do%3Fsysparm_query%3Dasset_tagSTARTSWITH${value}%26sysparm_first_row%3D1%26sysparm_view%3Dsow%26sysparm_choice_query_raw%3D%26sysparm_list_header_search%3Dtrue'},
+        ];
+
+        const cinameLinks = [
+            { label: 'CI name', url: 'https://vu.service-now.com/now/nav/ui/classic/params/target/cmdb_ci_list.do%3Fsysparm_query%3DnameSTARTSWITH${value}%26sysparm_first_row%3D1%26sysparm_view%3Dsow%26sysparm_choice_query_raw%3D%26sysparm_list_header_search%3Dtrue'},
         ];
 
         const stdnumLinks = [
@@ -103,7 +108,7 @@
             }
 
             try {
-                const text = (await navigator.clipboard.readText()).trim();
+                const text = (await navigator.clipboard.readText()).trim().toUpperCase();
 
                 let type = null;
                 let value = text;
@@ -118,15 +123,15 @@
                 }
                 else if (kbPattern.test(text)) {
                     type = 'kb';
-                    value = text.toUpperCase();
                 }
                 else if (locatiePattern.test(text)) {
                     type = 'cilocatie';
-                    value = text.toUpperCase();
                 }
                 else if (assetPattern.test(text)) {
                     type = 'ciasset';
-                    value = text.toUpperCase();
+                }
+                else if (cinamePattern.test(text)) {
+                    type = 'ciname';
                 }
                 else if (stdnumPattern.test(text)) {
                     type = 'stdnum';
@@ -138,7 +143,7 @@
                         '- A valid VUnetID (e.g. ABC123)\n' +
                         '- A valid email address (e.g. name@example.com)\n' +
                         '- A valid KB number (e.g. KB1234567)\n' +
-                        '- A valid Asset Tag or Location\n' +
+                        '- A valid Asset Tag, CI name or Location\n' +
                         '- A valid Student number\n'
                     );
                     return;
@@ -150,6 +155,7 @@
                 else if (type === 'kb') linkSet = kbLinks;
                 else if (type === 'cilocatie') linkSet = cilocaitieLinks;
                 else if (type === 'ciasset') linkSet = ciassetLinks;
+                else if (type === 'ciname') linkSet = cinameLinks;
                 else if (type === 'stdnum') linkSet = stdnumLinks;
 
                 // Auto-open if only 1 link
@@ -187,6 +193,7 @@
             else if (type === 'kb') linkSet = kbLinks;
             else if (type === 'cilocatie') linkSet = cilocaitieLinks;
             else if (type === 'ciasset') linkSet = ciassetLinks;
+            else if (type === 'ciname') linkSet = cinameLinks;
             else if (type === 'stdnum') linkSet = stdnumLinks;
 
             linkSet.forEach(link => {
@@ -210,7 +217,7 @@
                 a.onmouseover = () => a.style.textDecoration = 'underline';
                 a.onmouseout = () => a.style.textDecoration = 'none';
 
-                // Close panel on url click
+                // Close panel on click
                 a.addEventListener('click', () => {
                     panel.style.display = 'none';
                     panelVisible = false;
