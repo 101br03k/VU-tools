@@ -1,11 +1,13 @@
 // ==UserScript==
 // @name         Clipboard Code Link Popup with Labels
 // @namespace    http://tampermonkey.net/
-// @version      1.9
+// @version      1.10
 // @description  Shows a foldout with dynamic links based on clipboard content (VUnetID, email, knowledge item, asset tag or asset location). Opens links in new tabs, with labels and format validation alerts.
 // @author       You
 // @match        https://vu.service-now.com/*
 // @match        https://iga.it.vu.nl/*
+// @match        https://entra.microsoft.com/*
+// @match        https://gebedb.it.vu.nl/*
 // @grant        none
 // ==/UserScript==
 
@@ -33,6 +35,7 @@
             { label: 'Azure MFA', url: 'https://servicedesk.ucit.vu.nl/pwd.php?vunet=${value}&azure=yes'},
             { label: 'ra.SURFconext.nl', url: 'https://ra.surfconext.nl/second-factors?ra_search_ra_second_factors%5Bemail%5D=${value}' },
             { label: 'Omada', url: 'https://iga.it.vu.nl/dataobjlst.aspx?view=1000908&PTITLEAPPSTRID=1010426&SEARCH=${value}' },
+            { label: "AVD Sessie's", url: 'https://servicedesk.ucit.vu.nl/pwd.php?vunet=${value}&avd=yes' },
         ];
 
         const kbLinks = [
@@ -173,7 +176,7 @@
                 }
 
             } catch (err) {
-                alert('🚫 Failed to read from clipboard.\n' + err);
+                alert('Failed to read from clipboard.\n' + err);
             }
         });
 
