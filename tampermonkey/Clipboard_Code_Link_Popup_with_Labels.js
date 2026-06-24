@@ -21,7 +21,11 @@
         const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         const kbPattern = /^KB\d{7}$/i;
         const locatiePattern = /((HG|TR|IN|OW|NU|02|EC|AC|VO|BV|MF|SH)-[a-zA-Z0-9]{0,5}[^0-9])/;
-        const assetPattern = /([a-zA-Z]{2}-[0-9]{6})/;
+        const tbPattern = /([tbTB]{2}-[0-9]{6})/;
+        const computerPattern = /([pcPCltLT]{2}-[0-9]{6})/;
+        const printerPattern = /([prPR]{2}-[0-9]{6})/;
+        const mnPattern = /([mnMN]{2}-[0-9]{6})/;
+        const raPattern = /([raRA]{2}-[0-9]{6})/;
         const cinamePattern = /(VU-MWP-[0-9a-zA-Z]{7}|MGM-[0-9a-zA-Z]{6})/;
         const stdnumPattern = /[0-9]{7}/;
 
