@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Clipboard Code Link Popup with Labels
 // @namespace    http://tampermonkey.net/
-// @version      1.10
+// @version      1.11
 // @description  Shows a foldout with dynamic links based on clipboard content (VUnetID, email, knowledge item, asset tag or asset location). Opens links in new tabs, with labels and format validation alerts.
 // @author       You
 // @match        https://vu.service-now.com/*
@@ -50,10 +50,26 @@
             { label: 'Locatie', url: 'https://vu.service-now.com/now/nav/ui/classic/params/target/cmdb_ci_list.do%3Fsysparm_query%3Dlocation.nameSTARTSWITH${value}%26sysparm_first_row%3D1%26sysparm_view%3Dsow%26sysparm_choice_query_raw%3D%26sysparm_list_header_search%3Dtrue'},
         ];
 
-        const ciassetLinks = [
-            { label: 'Asset tag', url: 'https://vu.service-now.com/now/nav/ui/classic/params/target/cmdb_ci_list.do%3Fsysparm_query%3Dasset_tagSTARTSWITH${value}%26sysparm_first_row%3D1%26sysparm_view%3Dsow%26sysparm_choice_query_raw%3D%26sysparm_list_header_search%3Dtrue'},
+        const tbLinks = [
+            { label: 'x', url: '${value}'},
         ];
 
+        const computerLinks = [
+            { label: 'x', url: '${value}'},
+        ];
+
+        const printerLinks = [
+            { label: 'x', url: '${value}'},
+        ];
+
+        const mnLinks = [
+            { label: 'x', url: '${value}'},
+        ];
+
+        const raLinks = [
+            { label: 'x', url: '${value}'},
+        ];
+        
         const cinameLinks = [
             { label: 'CI name', url: 'https://vu.service-now.com/now/nav/ui/classic/params/target/cmdb_ci_list.do%3Fsysparm_query%3DnameSTARTSWITH${value}%26sysparm_first_row%3D1%26sysparm_view%3Dsow%26sysparm_choice_query_raw%3D%26sysparm_list_header_search%3Dtrue'},
         ];
