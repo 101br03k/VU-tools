@@ -150,7 +150,22 @@
                 else if (locatiePattern.test(text)) {
                     type = 'cilocatie';
                 }
-                else if (assetPattern.test(text)) {
+                else if (tbPattern.test(text)) {
+                    type = 'ciasset';
+                }
+                else if (computerPattern.test(text)) {
+                    type = 'ciasset';
+                }
+                else if (printerPattern.test(text)) {
+                    type = 'ciasset';
+                }
+                else if (mnPattern.test(text)) {
+                    type = 'ciasset';
+                }
+                else if (mnPattern.test(text)) {
+                    type = 'ciasset';
+                }
+                else if (raPattern.test(text)) {
                     type = 'ciasset';
                 }
                 else if (cinamePattern.test(text)) {
@@ -162,12 +177,8 @@
 
                 if (!type) {
                     alert(
-                        '❗ Clipboard must contain:\n' +
-                        '- A valid VUnetID (e.g. ABC123)\n' +
-                        '- A valid email address (e.g. name@example.com)\n' +
-                        '- A valid KB number (e.g. KB1234567)\n' +
-                        '- A valid Asset Tag, CI name or Location\n' +
-                        '- A valid Student number\n'
+                        '❗ Clipboard does not contain:\n' +
+                        "- A string that matches the configured regex's\n" +
                     );
                     return;
                 }
@@ -177,7 +188,11 @@
                 else if (type === 'email') linkSet = emailLinks;
                 else if (type === 'kb') linkSet = kbLinks;
                 else if (type === 'cilocatie') linkSet = cilocaitieLinks;
-                else if (type === 'ciasset') linkSet = ciassetLinks;
+                else if (type === 'tb') linkSet = tbLinks;
+                else if (type === 'computer') linkSet = computerLinks;
+                else if (type === 'printer') linkSet = printerLinks;
+                else if (type === 'mn') linkSet = mnLinks;
+                else if (type === 'ra') linkSet = raLinks;
                 else if (type === 'ciname') linkSet = cinameLinks;
                 else if (type === 'stdnum') linkSet = stdnumLinks;
 
@@ -214,8 +229,12 @@
             if (type === 'vunet') linkSet = vunetLinks;
             else if (type === 'email') linkSet = emailLinks;
             else if (type === 'kb') linkSet = kbLinks;
-            else if (type === 'cilocatie') linkSet = cilocaitieLinks;
-            else if (type === 'ciasset') linkSet = ciassetLinks;
+            else if (type === 'cilocatie') linkSet = cilocaitieLinks; 
+            else if (type === 'tb') linkSet = tbLinks;
+            else if (type === 'computer') linkSet = computerLinks;
+            else if (type === 'printer') linkSet = printerLinks;
+            else if (type === 'mn') linkSet = mnLinks;
+            else if (type === 'ra') linkSet = raLinks;
             else if (type === 'ciname') linkSet = cinameLinks;
             else if (type === 'stdnum') linkSet = stdnumLinks;
 
