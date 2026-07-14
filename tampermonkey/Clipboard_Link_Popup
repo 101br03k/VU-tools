@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Clipboard Code Link Popup with Labels
-// @namespace    http://tampermonkey.net/
+// @namespace    https://raw.githubusercontent.com/101br03k/VU-tools/refs/heads/main/tampermonkey/Clipboard_Link_Popup
 // @version      1.11
 // @description  Shows a foldout with dynamic links based on clipboard content (VUnetID, email, knowledge item, asset tag or asset location). Opens links in new tabs, with labels and format validation alerts.
 // @author       You
