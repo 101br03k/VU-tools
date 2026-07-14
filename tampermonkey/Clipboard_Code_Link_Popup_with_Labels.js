@@ -20,13 +20,13 @@
         const vunetPattern = /^[A-Za-z]{3}\d{3}$/;
         const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         const kbPattern = /^KB\d{7}$/i;
-        const locatiePattern = /((HG|TR|IN|OW|NU|02|EC|AC|VO|BV|MF|SH)-[a-zA-Z0-9]{0,5}[^0-9])/;
-        const tbPattern = /([tbTB]{2}-[0-9]{6})/;
-        const computerPattern = /([pcPCltLT]{2}-[0-9]{6})/;
+        const locatiePattern = /^(HG|TR|IN|OW|NU|02|EC|AC|VO|BV|MF|SH)-[A-Za-z0-9]{0,5}[A-Za-z]$/;
+        const tbPattern = /^TB-\d{6}$/i;
+        const computerPattern = /^(PC|LT)-\d{6}$/i;
         const modernPattern = /(VU-MWP-[0-9a-zA-Z]{7}|MGM-[0-9a-zA-Z]{6})/;
-        const printerPattern = /([prPR]{2}-[0-9]{6})/;
-        const mnPattern = /([mnMN]{2}-[0-9]{6})/;
-        const raPattern = /([raRA]{2}-[0-9]{6})/;
+        const printerPattern = /^PR-\d{6}$/i;
+        const mnPattern = /^MN-\d{6}$/i;
+        const raPattern = /^RA-\d{6}$/i;
         const stdnumPattern = /[0-9]{7}/;
 
         const vunetLinks = [
@@ -151,25 +151,22 @@
                     type = 'cilocatie';
                 }
                 else if (tbPattern.test(text)) {
-                    type = 'ciasset';
+                    type = 'tb';
                 }
                 else if (computerPattern.test(text)) {
-                    type = 'ciasset';
+                    type = 'computer';
                 }
                 else if (modernPattern.test(text)) {
                     type = 'modern';
                 }
                 else if (printerPattern.test(text)) {
-                    type = 'ciasset';
+                    type = 'pr';
                 }
                 else if (mnPattern.test(text)) {
-                    type = 'ciasset';
-                }
-                else if (mnPattern.test(text)) {
-                    type = 'ciasset';
+                    type = 'mn';
                 }
                 else if (raPattern.test(text)) {
-                    type = 'ciasset';
+                    type = 'ra';
                 }
                 else if (stdnumPattern.test(text)) {
                     type = 'stdnum';
