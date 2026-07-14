@@ -23,7 +23,7 @@
         const locatiePattern = /^(HG|TR|IN|OW|NU|02|EC|AC|VO|BV|MF|SH)-[A-Za-z0-9]{0,5}[A-Za-z]$/;
         const tbPattern = /^TB-\d{6}$/i;
         const computerPattern = /^(PC|LT)-\d{6}$/i;
-        const modernPattern = /^(VU-MWP-[A-Z0-9]{7}|MGM-[A-Z0-9]{6})$/i;
+        const modernPattern = /(VU-MWP-[0-9a-zA-Z]{7}|MGM-[0-9a-zA-Z]{6})/;
         const printerPattern = /^PR-\d{6}$/i;
         const mnPattern = /^MN-\d{6}$/i;
         const raPattern = /^RA-\d{6}$/i;
