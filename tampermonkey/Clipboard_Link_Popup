@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Clipboard Code Link Popup with Labels
 // @namespace    http://tampermonkey.net/
-// @version      1.10
+// @version      1.11
 // @description  Shows a foldout with dynamic links based on clipboard content (VUnetID, email, knowledge item, asset tag or asset location). Opens links in new tabs, with labels and format validation alerts.
 // @author       You
 // @match        https://vu.service-now.com/*
@@ -20,9 +20,13 @@
         const vunetPattern = /^[A-Za-z]{3}\d{3}$/;
         const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         const kbPattern = /^KB\d{7}$/i;
-        const locatiePattern = /((HG|TR|IN|OW|NU|02|EC|AC|VO|BV|MF|SH)-[a-zA-Z0-9]{0,5}[^0-9])/;
-        const assetPattern = /([a-zA-Z]{2}-[0-9]{6})/;
-        const cinamePattern = /(VU-MWP-[0-9a-zA-Z]{7}|MGM-[0-9a-zA-Z]{6})/;
+        const locatiePattern = /^(HG|TR|IN|OW|NU|02|EC|AC|VO|BV|MF|SH)-[A-Za-z0-9]{0,5}[A-Za-z]$/;
+        const tbPattern = /^TB-\d{6}$/i;
+        const computerPattern = /^(PC|LT)-\d{6}$/i;
+        const modernPattern = /(VU-MWP-[0-9a-zA-Z]{7}|MGM-[0-9a-zA-Z]{6})/;
+        const printerPattern = /^PR-\d{6}$/i;
+        const mnPattern = /^MN-\d{6}$/i;
+        const raPattern = /^RA-\d{6}$/i;
         const stdnumPattern = /[0-9]{7}/;
 
         const vunetLinks = [
@@ -43,15 +47,31 @@
         ];
 
         const cilocaitieLinks = [
-            { label: 'Locatie', url: 'https://vu.service-now.com/now/nav/ui/classic/params/target/cmdb_ci_list.do%3Fsysparm_query%3Dlocation.nameSTARTSWITH${value}%26sysparm_first_row%3D1%26sysparm_view%3Dsow%26sysparm_choice_query_raw%3D%26sysparm_list_header_search%3Dtrue'},
+            { label: 'CMDB', url: 'https://vu.service-now.com/now/nav/ui/classic/params/target/cmdb_ci_list.do%3Fsysparm_query%3Dlocation.nameSTARTSWITH${value}%26sysparm_first_row%3D1%26sysparm_view%3Dsow%26sysparm_choice_query_raw%3D%26sysparm_list_header_search%3Dtrue'},
         ];
 
-        const ciassetLinks = [
-            { label: 'Asset tag', url: 'https://vu.service-now.com/now/nav/ui/classic/params/target/cmdb_ci_list.do%3Fsysparm_query%3Dasset_tagSTARTSWITH${value}%26sysparm_first_row%3D1%26sysparm_view%3Dsow%26sysparm_choice_query_raw%3D%26sysparm_list_header_search%3Dtrue'},
+        const tbLinks = [
+            { label: 'CMDB', url: 'https://vu.service-now.com/now/nav/ui/classic/params/target/cmdb_ci_handheld_computing_list.do%3Fsysparm_query%3Dasset_tagSTARTSWITH${value}%26sysparm_first_row%3D1%26sysparm_view%3D%26sysparm_choice_query_raw%3D%26sysparm_list_header_search%3Dtrue'},
         ];
 
-        const cinameLinks = [
-            { label: 'CI name', url: 'https://vu.service-now.com/now/nav/ui/classic/params/target/cmdb_ci_list.do%3Fsysparm_query%3DnameSTARTSWITH${value}%26sysparm_first_row%3D1%26sysparm_view%3Dsow%26sysparm_choice_query_raw%3D%26sysparm_list_header_search%3Dtrue'},
+        const computerLinks = [
+            { label: 'CMDB', url: 'https://vu.service-now.com/now/nav/ui/classic/params/target/cmdb_ci_computer_list.do%3Fsysparm_query%3Dasset_tagSTARTSWITH${value}%26sysparm_first_row%3D1%26sysparm_view%3D%26sysparm_choice_query_raw%3D%26sysparm_list_header_search%3Dtrue'},
+        ];
+
+        const modernLinks = [
+            { label: 'CMDB', url: 'https://vu.service-now.com/now/nav/ui/classic/params/target/cmdb_ci_computer_list.do%3Fsysparm_query%3DnameSTARTSWITH${value}%26sysparm_first_row%3D1%26sysparm_view%3D%26sysparm_choice_query_raw%3D%26sysparm_list_header_search%3Dtrue'},
+        ];
+
+        const printerLinks = [
+            { label: 'CMDB', url: 'https://vu.service-now.com/now/nav/ui/classic/params/target/cmdb_ci_printer_list.do%3Fsysparm_query%3Dasset_tagSTARTSWITH${value}%26sysparm_first_row%3D1%26sysparm_view%3D%26sysparm_choice_query_raw%3D%26sysparm_list_header_search%3Dtrue'},
+        ];
+
+        const mnLinks = [
+            { label: 'CMDB', url: 'https://vu.service-now.com/now/nav/ui/classic/params/target/u_cmdb_ci_monitors_list.do%3Fsysparm_nostack%3Dtrue%26sysparm_query%3Dasset_tagSTARTSWITH${value}%26sysparm_first_row%3D1%26sysparm_view%3D%26sysparm_choice_query_raw%3D%26sysparm_list_header_search%3Dtrue'},
+        ];
+
+        const raLinks = [
+            { label: 'CMDB', url: 'https://vu.service-now.com/now/nav/ui/classic/params/target/u_cmdb_ci_port_replicators_list.do%3Fsysparm_query%3Dasset_tagSTARTSWITH${value}%26sysparm_first_row%3D1%26sysparm_view%3D%26sysparm_choice_query_raw%3D%26sysparm_list_header_search%3Dtrue'},
         ];
 
         const stdnumLinks = [
@@ -116,6 +136,8 @@
                 let type = null;
                 let value = text;
 
+                console.log("Clipboard:", JSON.stringify(text));
+
                 if (vunetPattern.test(text)) {
                     type = 'vunet';
                     value = text.toLowerCase();
@@ -130,11 +152,23 @@
                 else if (locatiePattern.test(text)) {
                     type = 'cilocatie';
                 }
-                else if (assetPattern.test(text)) {
-                    type = 'ciasset';
+                else if (tbPattern.test(text)) {
+                    type = 'tb';
                 }
-                else if (cinamePattern.test(text)) {
-                    type = 'ciname';
+                else if (computerPattern.test(text)) {
+                    type = 'computer';
+                }
+                else if (modernPattern.test(text)) {
+                    type = 'modern';
+                }
+                else if (printerPattern.test(text)) {
+                    type = 'pr';
+                }
+                else if (mnPattern.test(text)) {
+                    type = 'mn';
+                }
+                else if (raPattern.test(text)) {
+                    type = 'ra';
                 }
                 else if (stdnumPattern.test(text)) {
                     type = 'stdnum';
@@ -142,12 +176,8 @@
 
                 if (!type) {
                     alert(
-                        '❗ Clipboard must contain:\n' +
-                        '- A valid VUnetID (e.g. ABC123)\n' +
-                        '- A valid email address (e.g. name@example.com)\n' +
-                        '- A valid KB number (e.g. KB1234567)\n' +
-                        '- A valid Asset Tag, CI name or Location\n' +
-                        '- A valid Student number\n'
+                        '❗ Clipboard does not contain:\n' +
+                        "- A string that matches the configured regex's\n"
                     );
                     return;
                 }
@@ -157,8 +187,12 @@
                 else if (type === 'email') linkSet = emailLinks;
                 else if (type === 'kb') linkSet = kbLinks;
                 else if (type === 'cilocatie') linkSet = cilocaitieLinks;
-                else if (type === 'ciasset') linkSet = ciassetLinks;
-                else if (type === 'ciname') linkSet = cinameLinks;
+                else if (type === 'tb') linkSet = tbLinks;
+                else if (type === 'computer') linkSet = computerLinks;
+                else if (type === 'modern') linkSet = modernLinks;
+                else if (type === 'printer') linkSet = printerLinks;
+                else if (type === 'mn') linkSet = mnLinks;
+                else if (type === 'ra') linkSet = raLinks;
                 else if (type === 'stdnum') linkSet = stdnumLinks;
 
                 // Auto-open if only 1 link
@@ -195,8 +229,12 @@
             else if (type === 'email') linkSet = emailLinks;
             else if (type === 'kb') linkSet = kbLinks;
             else if (type === 'cilocatie') linkSet = cilocaitieLinks;
-            else if (type === 'ciasset') linkSet = ciassetLinks;
-            else if (type === 'ciname') linkSet = cinameLinks;
+            else if (type === 'tb') linkSet = tbLinks;
+            else if (type === 'computer') linkSet = computerLinks;
+            else if (type === 'modern') linkSet = modernLinks;
+            else if (type === 'pr') linkSet = printerLinks;
+            else if (type === 'mn') linkSet = mnLinks;
+            else if (type === 'ra') linkSet = raLinks;
             else if (type === 'stdnum') linkSet = stdnumLinks;
 
             linkSet.forEach(link => {
