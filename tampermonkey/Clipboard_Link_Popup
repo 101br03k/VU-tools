@@ -177,7 +177,11 @@
                 if (!type) {
                     alert(
                         '❗ Clipboard does not contain:\n' +
-                        "- A string that matches the configured regex's\n"
+                        "- A VUnetID or mailadres\n"+
+                        "- A knowledge item number\n"+
+                        "- A location\n"+
+                        "- A asset tag or modern workplace name \n"+
+                        "- A studentnumber\n"
                     );
                     return;
                 }
