@@ -178,7 +178,7 @@
                 if (!type) {
                     alert(
                         '❗ Clipboard does not contain:\n' +
-                        "- A string that matches the configured regex's\n" +
+                        "- A string that matches the configured regex's\n"
                     );
                     return;
                 }
