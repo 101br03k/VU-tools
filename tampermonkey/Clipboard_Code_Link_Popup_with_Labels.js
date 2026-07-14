@@ -51,11 +51,11 @@
         ];
 
         const tbLinks = [
-            { label: 'CMDB', url: 'https://vu.service-now.com/now/nav/ui/classic/params/target/cmdb_ci_handheld_computing_list.do%3Fsysparm_query%3DnameSTARTSWITH${value}%26sysparm_first_row%3D1%26sysparm_view%3D%26sysparm_choice_query_raw%3D%26sysparm_list_header_search%3Dtrue'},
+            { label: 'CMDB', url: 'https://vu.service-now.com/now/nav/ui/classic/params/target/cmdb_ci_handheld_computing_list.do%3Fsysparm_query%3Dasset_tagSTARTSWITH${value}%26sysparm_first_row%3D1%26sysparm_view%3D%26sysparm_choice_query_raw%3D%26sysparm_list_header_search%3Dtrue'},
         ];
 
         const computerLinks = [
-            { label: 'CMDB', url: 'https://vu.service-now.com/now/nav/ui/classic/params/target/cmdb_ci_computer_list.do%3Fsysparm_query%3DnameSTARTSWITH${value}%26sysparm_first_row%3D1%26sysparm_view%3D%26sysparm_choice_query_raw%3D%26sysparm_list_header_search%3Dtrue'},
+            { label: 'CMDB', url: 'https://vu.service-now.com/now/nav/ui/classic/params/target/cmdb_ci_computer_list.do%3Fsysparm_query%3Dasset_tagSTARTSWITH${value}%26sysparm_first_row%3D1%26sysparm_view%3D%26sysparm_choice_query_raw%3D%26sysparm_list_header_search%3Dtrue'},
         ];
 
         const modernLinks = [
@@ -63,15 +63,15 @@
         ];
 
         const printerLinks = [
-            { label: 'CMDB', url: 'https://vu.service-now.com/now/nav/ui/classic/params/target/cmdb_ci_printer_list.do%3Fsysparm_query%3DnameSTARTSWITH${value}%26sysparm_first_row%3D1%26sysparm_view%3D%26sysparm_choice_query_raw%3D%26sysparm_list_header_search%3Dtrue'},
+            { label: 'CMDB', url: 'https://vu.service-now.com/now/nav/ui/classic/params/target/cmdb_ci_printer_list.do%3Fsysparm_query%3Dasset_tagSTARTSWITH${value}%26sysparm_first_row%3D1%26sysparm_view%3D%26sysparm_choice_query_raw%3D%26sysparm_list_header_search%3Dtrue'},
         ];
 
         const mnLinks = [
-            { label: 'CMDB', url: 'https://vu.service-now.com/now/nav/ui/classic/params/target/u_cmdb_ci_monitors_list.do%3Fsysparm_nostack%3Dtrue%26sysparm_query%3DnameSTARTSWITH${value}%26sysparm_first_row%3D1%26sysparm_view%3D%26sysparm_choice_query_raw%3D%26sysparm_list_header_search%3Dtrue'},
+            { label: 'CMDB', url: 'https://vu.service-now.com/now/nav/ui/classic/params/target/u_cmdb_ci_monitors_list.do%3Fsysparm_nostack%3Dtrue%26sysparm_query%3Dasset_tagSTARTSWITH${value}%26sysparm_first_row%3D1%26sysparm_view%3D%26sysparm_choice_query_raw%3D%26sysparm_list_header_search%3Dtrue'},
         ];
 
         const raLinks = [
-            { label: 'CMDB', url: 'https://vu.service-now.com/now/nav/ui/classic/params/target/u_cmdb_ci_port_replicators_list.do%3Fsysparm_query%3DnameSTARTSWITH${value}%26sysparm_first_row%3D1%26sysparm_view%3D%26sysparm_choice_query_raw%3D%26sysparm_list_header_search%3Dtrue'},
+            { label: 'CMDB', url: 'https://vu.service-now.com/now/nav/ui/classic/params/target/u_cmdb_ci_port_replicators_list.do%3Fsysparm_query%3Dasset_tagSTARTSWITH${value}%26sysparm_first_row%3D1%26sysparm_view%3D%26sysparm_choice_query_raw%3D%26sysparm_list_header_search%3Dtrue'},
         ];
 
         const stdnumLinks = [
