@@ -23,7 +23,7 @@
         const locatiePattern = /^(HG|TR|IN|OW|NU|02|EC|AC|VO|BV|MF|SH)-[A-Za-z0-9]{0,5}[A-Za-z]$/;
         const tbPattern = /^TB-\d{6}$/i;
         const computerPattern = /^(PC|LT)-\d{6}$/i;
-        const modernPattern = /(VU-MWP-[0-9a-zA-Z]{7}|MGM-[0-9a-zA-Z]{6})/;
+        const modernPattern = /^(VU-MWP-[A-Z0-9]{7}|MGM-[A-Z0-9]{6})$/i;
         const printerPattern = /^PR-\d{6}$/i;
         const mnPattern = /^MN-\d{6}$/i;
         const raPattern = /^RA-\d{6}$/i;
@@ -69,7 +69,7 @@
         const mnLinks = [
             { label: 'CMDB', url: 'https://vu.service-now.com/now/nav/ui/classic/params/target/u_cmdb_ci_monitors_list.do%3Fsysparm_nostack%3Dtrue%26sysparm_query%3DnameSTARTSWITH${value}%26sysparm_first_row%3D1%26sysparm_view%3D%26sysparm_choice_query_raw%3D%26sysparm_list_header_search%3Dtrue'},
         ];
-        
+
         const raLinks = [
             { label: 'CMDB', url: 'https://vu.service-now.com/now/nav/ui/classic/params/target/u_cmdb_ci_port_replicators_list.do%3Fsysparm_query%3DnameSTARTSWITH${value}%26sysparm_first_row%3D1%26sysparm_view%3D%26sysparm_choice_query_raw%3D%26sysparm_list_header_search%3Dtrue'},
         ];
@@ -135,6 +135,8 @@
 
                 let type = null;
                 let value = text;
+
+                console.log("Clipboard:", JSON.stringify(text));
 
                 if (vunetPattern.test(text)) {
                     type = 'vunet';
@@ -226,11 +228,11 @@
             if (type === 'vunet') linkSet = vunetLinks;
             else if (type === 'email') linkSet = emailLinks;
             else if (type === 'kb') linkSet = kbLinks;
-            else if (type === 'cilocatie') linkSet = cilocaitieLinks; 
+            else if (type === 'cilocatie') linkSet = cilocaitieLinks;
             else if (type === 'tb') linkSet = tbLinks;
             else if (type === 'computer') linkSet = computerLinks;
             else if (type === 'modern') linkSet = modernLinks;
-            else if (type === 'printer') linkSet = printerLinks;
+            else if (type === 'pr') linkSet = printerLinks;
             else if (type === 'mn') linkSet = mnLinks;
             else if (type === 'ra') linkSet = raLinks;
             else if (type === 'stdnum') linkSet = stdnumLinks;
