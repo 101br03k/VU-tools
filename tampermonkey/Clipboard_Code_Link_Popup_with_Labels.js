@@ -23,10 +23,10 @@
         const locatiePattern = /((HG|TR|IN|OW|NU|02|EC|AC|VO|BV|MF|SH)-[a-zA-Z0-9]{0,5}[^0-9])/;
         const tbPattern = /([tbTB]{2}-[0-9]{6})/;
         const computerPattern = /([pcPCltLT]{2}-[0-9]{6})/;
+        const modernPattern = /(VU-MWP-[0-9a-zA-Z]{7}|MGM-[0-9a-zA-Z]{6})/;
         const printerPattern = /([prPR]{2}-[0-9]{6})/;
         const mnPattern = /([mnMN]{2}-[0-9]{6})/;
         const raPattern = /([raRA]{2}-[0-9]{6})/;
-        const cinamePattern = /(VU-MWP-[0-9a-zA-Z]{7}|MGM-[0-9a-zA-Z]{6})/;
         const stdnumPattern = /[0-9]{7}/;
 
         const vunetLinks = [
@@ -58,6 +58,10 @@
             { label: 'x', url: 'https://vu.service-now.com/now/nav/ui/classic/params/target/cmdb_ci_computer_list.do%3Fsysparm_query%3DnameSTARTSWITH${value}%26sysparm_first_row%3D1%26sysparm_view%3D%26sysparm_choice_query_raw%3D%26sysparm_list_header_search%3Dtrue'},
         ];
 
+        const modernLinks = [
+            { label: 'CI name', url: 'https://vu.service-now.com/now/nav/ui/classic/params/target/cmdb_ci_list.do%3Fsysparm_query%3DnameSTARTSWITH${value}%26sysparm_first_row%3D1%26sysparm_view%3Dsow%26sysparm_choice_query_raw%3D%26sysparm_list_header_search%3Dtrue'},
+        ];
+
         const printerLinks = [
             { label: 'x', url: 'https://vu.service-now.com/now/nav/ui/classic/params/target/cmdb_ci_printer_list.do%3Fsysparm_query%3DnameSTARTSWITH${value}%26sysparm_first_row%3D1%26sysparm_view%3D%26sysparm_choice_query_raw%3D%26sysparm_list_header_search%3Dtrue'},
         ];
@@ -68,10 +72,6 @@
         
         const raLinks = [
             { label: 'x', url: 'https://vu.service-now.com/now/nav/ui/classic/params/target/u_cmdb_ci_port_replicators_list.do%3Fsysparm_query%3DnameSTARTSWITH${value}%26sysparm_first_row%3D1%26sysparm_view%3D%26sysparm_choice_query_raw%3D%26sysparm_list_header_search%3Dtrue'},
-        ];
-        
-        const cinameLinks = [
-            { label: 'CI name', url: 'https://vu.service-now.com/now/nav/ui/classic/params/target/cmdb_ci_list.do%3Fsysparm_query%3DnameSTARTSWITH${value}%26sysparm_first_row%3D1%26sysparm_view%3Dsow%26sysparm_choice_query_raw%3D%26sysparm_list_header_search%3Dtrue'},
         ];
 
         const stdnumLinks = [
@@ -156,6 +156,9 @@
                 else if (computerPattern.test(text)) {
                     type = 'ciasset';
                 }
+                else if (modernPattern.test(text)) {
+                    type = 'modern';
+                }
                 else if (printerPattern.test(text)) {
                     type = 'ciasset';
                 }
@@ -167,9 +170,6 @@
                 }
                 else if (raPattern.test(text)) {
                     type = 'ciasset';
-                }
-                else if (cinamePattern.test(text)) {
-                    type = 'ciname';
                 }
                 else if (stdnumPattern.test(text)) {
                     type = 'stdnum';
@@ -190,10 +190,10 @@
                 else if (type === 'cilocatie') linkSet = cilocaitieLinks;
                 else if (type === 'tb') linkSet = tbLinks;
                 else if (type === 'computer') linkSet = computerLinks;
+                else if (type === 'modern') linkSet = modernLinks;
                 else if (type === 'printer') linkSet = printerLinks;
                 else if (type === 'mn') linkSet = mnLinks;
                 else if (type === 'ra') linkSet = raLinks;
-                else if (type === 'ciname') linkSet = cinameLinks;
                 else if (type === 'stdnum') linkSet = stdnumLinks;
 
                 // Auto-open if only 1 link
@@ -232,10 +232,10 @@
             else if (type === 'cilocatie') linkSet = cilocaitieLinks; 
             else if (type === 'tb') linkSet = tbLinks;
             else if (type === 'computer') linkSet = computerLinks;
+            else if (type === 'modern') linkSet = modernLinks;
             else if (type === 'printer') linkSet = printerLinks;
             else if (type === 'mn') linkSet = mnLinks;
             else if (type === 'ra') linkSet = raLinks;
-            else if (type === 'ciname') linkSet = cinameLinks;
             else if (type === 'stdnum') linkSet = stdnumLinks;
 
             linkSet.forEach(link => {
