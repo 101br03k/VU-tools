@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Clipboard Code Link Popup with Labels
 // @namespace    https://raw.githubusercontent.com/101br03k/VU-tools/refs/heads/main/tampermonkey/Clipboard_Link_Popup
-// @version      1.11.1
+// @version      1.11
 // @description  Shows a foldout with dynamic links based on clipboard content (VUnetID, email, knowledge item, asset tag or asset location). Opens links in new tabs, with labels and format validation alerts.
 // @author       You
 // @match        https://vu.service-now.com/*
@@ -30,7 +30,6 @@
         const stdnumPattern = /[0-9]{7}/;
 
         const vunetLinks = [
-            { label: 'Password Resets', url: 'https://vu.service-now.com/now/nav/ui/classic/params/target/pwd_reset_request_list.do%3Fsysparm_query%3Duser.u_samaccountnameSTARTSWITH${value}%26sysparm_first_row%3D1%26sysparm_view%3D' },
             { label: 'SD Aided reset', url: 'https://servicedesk.ucit.vu.nl/pwd.php?vunet=${value}&pass=yes' },
             { label: 'Omada', url: 'https://iga.it.vu.nl/dataobjlst.aspx?view=1000908&PTITLEAPPSTRID=1010426&SEARCH=${value}' },
         ];
