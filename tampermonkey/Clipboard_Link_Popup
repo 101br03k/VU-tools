@@ -73,6 +73,10 @@
             { label: 'CMDB', url: 'https://vu.service-now.com/now/nav/ui/classic/params/target/u_cmdb_ci_port_replicators_list.do%3Fsysparm_query%3Dasset_tagSTARTSWITH${value}%26sysparm_first_row%3D1%26sysparm_view%3D%26sysparm_choice_query_raw%3D%26sysparm_list_header_search%3Dtrue'},
         ];
 
+        const cpLinks = [
+            { label: 'CMDB', url: 'https://vu.service-now.com/now/nav/ui/classic/params/target/cmdb_ci_ip_phone_list.do%3Fsysparm_nostack%3Dtrue%26sysparm_query%3Dasset_tag%253D${value}%26sysparm_first_row%3D1%26sysparm_view%3D' },
+        ];
+
         const stdnumLinks = [
             { label: 'Omada', url: 'https://iga.it.vu.nl/dataobjlst.aspx?view=1000908&PTITLEAPPSTRID=1010426&SEARCH=${value}' },
         ];
@@ -169,6 +173,9 @@
                 else if (raPattern.test(text)) {
                     type = 'ra';
                 }
+                else if (cpPattern.test(text)) {
+                    type = 'cp';
+                }
                 else if (stdnumPattern.test(text)) {
                     type = 'stdnum';
                 }
@@ -196,6 +203,7 @@
                 else if (type === 'printer') linkSet = printerLinks;
                 else if (type === 'mn') linkSet = mnLinks;
                 else if (type === 'ra') linkSet = raLinks;
+                else if (type === 'cp') linkSet = cpLinks;
                 else if (type === 'stdnum') linkSet = stdnumLinks;
 
                 // Auto-open if only 1 link
@@ -238,6 +246,7 @@
             else if (type === 'pr') linkSet = printerLinks;
             else if (type === 'mn') linkSet = mnLinks;
             else if (type === 'ra') linkSet = raLinks;
+            else if (type === 'cp') linkSet = cpLinks;
             else if (type === 'stdnum') linkSet = stdnumLinks;
 
             linkSet.forEach(link => {
