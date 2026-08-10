@@ -27,6 +27,7 @@
         const printerPattern = /^PR-\d{6}$/i;
         const mnPattern = /^MN-\d{6}$/i;
         const raPattern = /^RA-\d{6}$/i;
+        const cpPattern = /^RA-\d{6}$/i;
         const stdnumPattern = /[0-9]{7}/;
 
         const vunetLinks = [
