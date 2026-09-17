@@ -8,6 +8,8 @@
 // @match        https://iga.it.vu.nl/*
 // @match        https://entra.microsoft.com/*
 // @match        https://gebedb.it.vu.nl/*
+// @match        https://menandmice.vu.nl/*
+// @match        https://130.37.1.200/*
 // @grant        none
 // ==/UserScript==
 
