@@ -25,12 +25,13 @@
         const locatiePattern = /^(HG|TR|IN|OW|NU|02|EC|AC|VO|BV|MF|SH|HT)-[A-Za-z0-9]{0,5}$/;
         const tbPattern = /^TB-\d{6}$/i;
         const computerPattern = /^(PC|LT|MB|MW)-\d{6}$/i;
-        const modernPattern = /(VU-MWP-[0-9a-zA-Z]{7}|MGM-[0-9a-zA-Z]{6}|MD[0-9]{1}-[0-9]{6})/;
+        const modernPattern = /^(VU-MWP-[0-9a-zA-Z]{7}|MGM-[0-9a-zA-Z]{6}|MD[0-9]-[0-9]{6})$/;
         const printerPattern = /^PR-\d{6}$/i;
         const mnPattern = /^MN-\d{6}$/i;
         const raPattern = /^RA-\d{6}$/i;
         const cpPattern = /^CP-\d{6}$/i;
-        const stdnumPattern = /[0-9]{7}/;
+        const stdnumPattern = /^[0-9]{7}$/;
+        const macaddPattern = /^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$/
 
         const vunetLinks = [
             { label: 'Password Resets', url: 'https://vu.service-now.com/now/nav/ui/classic/params/target/pwd_reset_request_list.do%3Fsysparm_query%3Duser.u_samaccountnameSTARTSWITH${value}%26sysparm_first_row%3D1%26sysparm_view%3D' },
@@ -84,6 +85,26 @@
         const stdnumLinks = [
             { label: 'Omada', url: 'https://iga.it.vu.nl/dataobjlst.aspx?view=1000908&PTITLEAPPSTRID=1010426&SEARCH=${value}' },
         ];
+
+        const macaddLinks = [
+            { label: 'CMDB', url: 'https://vu.service-now.com/now/nav/ui/classic/params/target/cmdb_ci_list.do%3Fsysparm_query%3Dmac_addressSTARTSWITH${value}%26sysparm_first_row%3D1%26sysparm_view%3Dsow%26sysparm_choice_query_raw%3D%26sysparm_list_header_search%3Dtrue' },
+        ]
+
+        const linkSets = {
+            vunet: vunetLinks,
+            email: emailLinks,
+            kb: kbLinks,
+            cilocatie: cilocaitieLinks,
+            tb: tbLinks,
+            computer: computerLinks,
+            modern: modernLinks,
+            pr: printerLinks,
+            mn: mnLinks,
+            ra: raLinks,
+            cp: cpLinks,
+            stdnum: stdnumLinks,
+            macadd: macaddLinks,
+        };
 
         // Create toggle button
         const button = document.createElement('button');
@@ -183,6 +204,9 @@
                 else if (stdnumPattern.test(text)) {
                     type = 'stdnum';
                 }
+                else if (macaddPattern.test(text)) {
+                    type = 'macadd';
+                }
 
                 if (!type) {
                     alert(
@@ -192,28 +216,25 @@
                         "- A knowledge item number\n"+
                         "- A location\n"+
                         "- A asset tag or modern workplace name \n"+
-                        "- A studentnumber\n"
+                        "- A studentnumber\n"+
+                        "- A macadress\n"
                     );
                     return;
                 }
 
-                let linkSet;
-                if (type === 'vunet') linkSet = vunetLinks;
-                else if (type === 'email') linkSet = emailLinks;
-                else if (type === 'kb') linkSet = kbLinks;
-                else if (type === 'cilocatie') linkSet = cilocaitieLinks;
-                else if (type === 'tb') linkSet = tbLinks;
-                else if (type === 'computer') linkSet = computerLinks;
-                else if (type === 'modern') linkSet = modernLinks;
-                else if (type === 'printer') linkSet = printerLinks;
-                else if (type === 'mn') linkSet = mnLinks;
-                else if (type === 'ra') linkSet = raLinks;
-                else if (type === 'cp') linkSet = cpLinks;
-                else if (type === 'stdnum') linkSet = stdnumLinks;
+                const linkSet = linkSets[type];
+
+                if (!linkSet) {
+                    console.error('No link set found for type:', type);
+                    return;
+                }
 
                 // Auto-open if only 1 link
                 if (linkSet.length === 1) {
-                    const finalUrl = linkSet[0].url.replace('${value}', encodeURIComponent(value));
+                    const finalUrl = linkSet[0].url.replace(
+                        '${value}',
+                        encodeURIComponent(value)
+                    );
 
                     panel.style.display = 'none';
                     panelVisible = false;
@@ -240,19 +261,12 @@
             title.textContent = `Links for ${type}: ${value}`;
             panel.appendChild(title);
 
-            let linkSet;
-            if (type === 'vunet') linkSet = vunetLinks;
-            else if (type === 'email') linkSet = emailLinks;
-            else if (type === 'kb') linkSet = kbLinks;
-            else if (type === 'cilocatie') linkSet = cilocaitieLinks;
-            else if (type === 'tb') linkSet = tbLinks;
-            else if (type === 'computer') linkSet = computerLinks;
-            else if (type === 'modern') linkSet = modernLinks;
-            else if (type === 'pr') linkSet = printerLinks;
-            else if (type === 'mn') linkSet = mnLinks;
-            else if (type === 'ra') linkSet = raLinks;
-            else if (type === 'cp') linkSet = cpLinks;
-            else if (type === 'stdnum') linkSet = stdnumLinks;
+            const linkSet = linkSets[type];
+
+            if (!linkSet) {
+                console.error('No link set found for type:', type);
+                return;
+            }
 
             linkSet.forEach(link => {
 
